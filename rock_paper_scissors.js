@@ -1,4 +1,5 @@
 // Have computer randomly select rock, paper, or scissors
+
 function computeSelection () {
   let selection = "";
 
@@ -15,15 +16,17 @@ function computeSelection () {
     default:
       console.log("No selection made");
   }
-  
+
   return selection;
 }
 
-// Play single round of rock paper scissors
+// Play single round of rock paper scissors against computer
+
 function playRound() {
   let playerSelection = "";
   let computerSelection = "";
-  let outcome = "";
+  let outcomeMessage = "";
+  let outcomeCase = 0;
   
   computerSelection = computeSelection();
   playerSelection = prompt("Choose rock, paper, or scissors").toUpperCase();
@@ -37,23 +40,67 @@ function playRound() {
   console.log("Player: " + playerSelection + " | Computer: " + computerSelection);
   
   if (playerSelection === computerSelection) {
-    outcome = "It's a tie!";
+    outcomeMessage = "It's a tie!";
+    outcomeCase = 0;
   } else if (playerSelection === "ROCK" && computerSelection === "SCISSORS" ||
              playerSelection === "PAPER" && computerSelection === "ROCK" ||
              playerSelection === "SCISSORS" && computerSelection === "PAPER") {
-    outcome = "You win! " + playerSelection + " beats " + computerSelection;
+    outcomeMessage = "You win! " + playerSelection + " beats " + computerSelection;
+    outcomeCase = 1;
   } else {
-    outcome = "You lose! " + computerSelection + " beats " + playerSelection;
+    outcomeMessage = "You lose! " + computerSelection + " beats " + playerSelection;
+    outcomeCase = 2;
   }
   
-  return console.log(outcome);
+  console.log(outcomeMessage);
+
+  return outcomeCase;
 }
 
-// Play best-of-5 game of rock paper scissors
-// function playGame() {
+// Play best-of-5 game of rock paper scissors against computer
 
-// }
+function playGame() {
+  let playerScore = 0;
+  let computerScore = 0;
+  let outcome = 0;
+  let finalScore = "";
+  let winner = "";
+  let loser = "";
 
+  while (playerScore < 3 && computerScore < 3) {
+    switch (outcome = playRound()) {
+      case 1:
+        playerScore++;
+        break;
+      case 2:
+        computerScore++;
+        break;
+      default:
+    }
+
+    if (playerScore < 3 && computerScore < 3) {
+      console.log("Current Score: Player " + playerScore + " - " + computerScore + " Computer");
+      console.log("NEXT ROUND");
+    }
+  }
+
+  if (playerScore === 3) {
+    winner = "Player";
+    loser = "Computer";
+    console.log("HOORAY! You won the game!");
+  } else {
+    winner = "Computer";
+    loser = "Player";
+    console.log("SORRY! You lost the game!");
+  }
+
+  finalScore = "Final Score: Player " + playerScore + " - " + computerScore + " Computer";
+  console.log(finalScore);
+
+  return "Winner: " + winner + " | Loser: " + loser;
+}
+
+// Test randomness of computeSelection()
 /*
 function testRandomness() {
   let outcome = "";
